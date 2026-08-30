@@ -186,6 +186,13 @@ select:disabled {
   color: #8a5200;
 }
 
+.loading {
+  text-align: center;
+  padding: 10px;
+  color: #64748b;
+  font-size: 14px;
+}
+
 @media(max-width:600px) {
 
   .logo {
@@ -225,7 +232,9 @@ select:disabled {
 
 </header>
 
+
 <main class="container">
+
 
 <section class="card" id="selectionCard">
 
@@ -233,17 +242,27 @@ select:disabled {
     Select Equipment
   </div>
 
+
+  <div
+    class="loading"
+    id="loading"
+  >
+    Loading equipment...
+  </div>
+
+
   <label>
     Equipment
   </label>
 
-  <select id="equipment">
+  <select id="equipment" disabled>
 
     <option value="">
-      Connecting...
+      Loading...
     </option>
 
   </select>
+
 
   <label>
     Make / Manufacturer
@@ -257,6 +276,7 @@ select:disabled {
 
   </select>
 
+
   <label>
     Model
   </label>
@@ -268,6 +288,7 @@ select:disabled {
     </option>
 
   </select>
+
 
   <div
     class="equipment-card"
@@ -286,10 +307,12 @@ select:disabled {
 
   </div>
 
+
   <div
     class="message"
     id="message"
   ></div>
+
 
   <button
     class="start-button"
@@ -302,6 +325,7 @@ select:disabled {
   </button>
 
 </section>
+
 
 <section
   class="card result"
@@ -344,7 +368,9 @@ select:disabled {
 
 </section>
 
+
 </main>
+
 
 <footer
   style="
@@ -359,14 +385,15 @@ select:disabled {
 
 </footer>
 
+
 <script>
 
 /* =========================================================
-   GOOGLE APPS SCRIPT URL
+   LOAD EQUIPMENT FROM SAME GITHUB SITE
    ========================================================= */
 
-const API_URL =
-  "https://script.google.com/macros/s/AKfycbxJIiu9XgpnoxL9TrbQyOLJufQUd1dDFJuJuN8QUrr12pjvj403sGUoi5Zhjv07qy2v/exec";
+const DATA_URL =
+  "./equipment.json";
 
 
 let equipmentData = [];
@@ -402,6 +429,9 @@ const startButton =
 const message =
   document.getElementById("message");
 
+const loading =
+  document.getElementById("loading");
+
 const selectionCard =
   document.getElementById("selectionCard");
 
@@ -419,215 +449,80 @@ const backButton =
 
 
 /* =========================================================
-   MESSAGE
+   LOAD JSON
    ========================================================= */
 
-function showMessage(text) {
+async function loadEquipmentData() {
 
-  message.textContent = text;
+  try {
 
-  message.style.display = "block";
-
-}
-
-
-function clearMessage() {
-
-  message.textContent = "";
-
-  message.style.display = "none";
-
-}
+    loading.style.display =
+      "block";
 
 
-/* =========================================================
-   LOAD EQUIPMENT DATA
-   ========================================================= */
-
-function loadEquipmentData() {
-
-  equipmentSelect.innerHTML =
-    '<option value="">Connecting...</option>';
-
-  equipmentSelect.disabled = true;
-
-  clearMessage();
+    const response =
+      await fetch(
+        DATA_URL +
+        "?v=" +
+        Date.now()
+      );
 
 
-  const callbackName =
-    "PMKnowledgeHubCallback_" + Date.now();
+    if (!response.ok) {
 
-
-  let completed = false;
-
-  const script =
-    document.createElement("script");
-
-
-  function cleanup() {
-
-    try {
-
-      delete window[callbackName];
-
-    } catch(e) {}
-
-
-    if (
-      script &&
-      script.parentNode
-    ) {
-
-      script.parentNode.removeChild(script);
+      throw new Error(
+        "HTTP " +
+        response.status
+      );
 
     }
 
+
+    const data =
+      await response.json();
+
+
+    if (
+      !Array.isArray(data)
+    ) {
+
+      throw new Error(
+        "Invalid equipment.json"
+      );
+
+    }
+
+
+    equipmentData =
+      data;
+
+
+    loading.style.display =
+      "none";
+
+
+    populateEquipment();
+
+
   }
 
+  catch(error) {
 
-  /*
-   * Apps Script returns:
-   *
-   * PMKnowledgeHubCallback_xxxxx([...data...]);
-   */
-
-  window[callbackName] =
-    function(data) {
-
-      if (completed) return;
-
-      completed = true;
+    console.error(
+      "Equipment loading error:",
+      error
+    );
 
 
-      console.log(
-        "P&M Knowledge Hub data:",
-        data
-      );
+    loading.textContent =
+      "Unable to load equipment data.";
 
 
-      if (
-        !Array.isArray(data)
-      ) {
+    showMessage(
+      "Please check that equipment.json is in the GitHub repository."
+    );
 
-        equipmentSelect.innerHTML =
-          '<option value="">Data error</option>';
-
-        showMessage(
-          "The Knowledge Hub returned invalid equipment data."
-        );
-
-        cleanup();
-
-        return;
-
-      }
-
-
-      equipmentData =
-        data;
-
-
-      if (
-        equipmentData.length === 0
-      ) {
-
-        equipmentSelect.innerHTML =
-          '<option value="">No equipment found</option>';
-
-        showMessage(
-          "No equipment records were found."
-        );
-
-        cleanup();
-
-        return;
-
-      }
-
-
-      populateEquipment();
-
-      cleanup();
-
-    };
-
-
-  /*
-   * IMPORTANT:
-   * This is JSONP.
-   */
-
-  script.src =
-    API_URL +
-    "?action=data" +
-    "&callback=" +
-    encodeURIComponent(callbackName) +
-    "&v=" +
-    Date.now();
-
-
-  script.async = true;
-
-
-  script.onerror =
-    function() {
-
-      if (completed) return;
-
-      completed = true;
-
-
-      equipmentSelect.innerHTML =
-        '<option value="">Connection failed</option>';
-
-      equipmentSelect.disabled =
-        true;
-
-
-      showMessage(
-        "Unable to connect to P&M Knowledge Hub."
-      );
-
-
-      cleanup();
-
-    };
-
-
-  document.head.appendChild(
-    script
-  );
-
-
-  /*
-   * Timeout protection
-   */
-
-  setTimeout(
-    function() {
-
-      if (completed) return;
-
-      completed = true;
-
-
-      equipmentSelect.innerHTML =
-        '<option value="">Connection timeout</option>';
-
-      equipmentSelect.disabled =
-        true;
-
-
-      showMessage(
-        "P&M Knowledge Hub took too long to respond."
-      );
-
-
-      cleanup();
-
-    },
-    20000
-  );
+  }
 
 }
 
@@ -641,12 +536,8 @@ function populateEquipment() {
   equipmentSelect.innerHTML =
     '<option value="">Select equipment</option>';
 
-  equipmentSelect.disabled =
-    false;
 
-
-  const equipmentList =
-    [];
+  const list = [];
 
 
   equipmentData.forEach(
@@ -660,12 +551,10 @@ function populateEquipment() {
 
       if (
         name &&
-        !equipmentList.includes(name)
+        !list.includes(name)
       ) {
 
-        equipmentList.push(
-          name
-        );
+        list.push(name);
 
       }
 
@@ -673,10 +562,10 @@ function populateEquipment() {
   );
 
 
-  equipmentList.sort();
+  list.sort();
 
 
-  equipmentList.forEach(
+  list.forEach(
     function(name) {
 
       const option =
@@ -699,6 +588,10 @@ function populateEquipment() {
 
     }
   );
+
+
+  equipmentSelect.disabled =
+    false;
 
 }
 
@@ -727,26 +620,27 @@ equipmentSelect.addEventListener(
     if (!equipment) return;
 
 
-    const makes =
-      [];
+    const makes = [];
 
 
     equipmentData.forEach(
       function(item) {
 
-        const sameEquipment =
+        if (
+
           String(
             item.equipment || ""
           )
           .trim()
           .toUpperCase()
+
           ===
+
           equipment
             .trim()
-            .toUpperCase();
+            .toUpperCase()
 
-
-        if (sameEquipment) {
+        ) {
 
           const make =
             String(
@@ -759,9 +653,7 @@ equipmentSelect.addEventListener(
             !makes.includes(make)
           ) {
 
-            makes.push(
-              make
-            );
+            makes.push(make);
 
           }
 
@@ -772,10 +664,6 @@ equipmentSelect.addEventListener(
 
 
     makes.sort();
-
-
-    makeSelect.innerHTML =
-      '<option value="">Select make</option>';
 
 
     makes.forEach(
@@ -805,16 +693,6 @@ equipmentSelect.addEventListener(
 
     makeSelect.disabled =
       makes.length === 0;
-
-
-    if (
-      makes.length === 0
-    ) {
-
-      makeSelect.innerHTML =
-        '<option value="">No make found</option>';
-
-    }
 
   }
 );
@@ -846,10 +724,6 @@ makeSelect.addEventListener(
       !equipment ||
       !make
     ) return;
-
-
-    const models =
-      [];
 
 
     equipmentData.forEach(
@@ -884,19 +758,23 @@ makeSelect.addEventListener(
           sameMake
         ) {
 
-          const model =
-            String(
-              item.model || ""
-            ).trim();
-
-
-          if (model) {
-
-            models.push(
-              model
+          const option =
+            document.createElement(
+              "option"
             );
 
-          }
+
+          option.value =
+            item.model;
+
+
+          option.textContent =
+            item.model;
+
+
+          modelSelect.appendChild(
+            option
+          );
 
         }
 
@@ -904,47 +782,8 @@ makeSelect.addEventListener(
     );
 
 
-    modelSelect.innerHTML =
-      '<option value="">Select model</option>';
-
-
-    models.forEach(
-      function(model) {
-
-        const option =
-          document.createElement(
-            "option"
-          );
-
-
-        option.value =
-          model;
-
-
-        option.textContent =
-          model;
-
-
-        modelSelect.appendChild(
-          option
-        );
-
-      }
-    );
-
-
     modelSelect.disabled =
-      models.length === 0;
-
-
-    if (
-      models.length === 0
-    ) {
-
-      modelSelect.innerHTML =
-        '<option value="">No model found</option>';
-
-    }
+      modelSelect.options.length <= 1;
 
   }
 );
@@ -1028,11 +867,7 @@ modelSelect.addEventListener(
 
     if (
       !selectedEquipment
-    ) {
-
-      return;
-
-    }
+    ) return;
 
 
     equipmentName.textContent =
@@ -1169,7 +1004,7 @@ backButton.addEventListener(
 
 
 /* =========================================================
-   RESET MAKE
+   RESET
    ========================================================= */
 
 function resetMake() {
@@ -1183,10 +1018,6 @@ function resetMake() {
 }
 
 
-/* =========================================================
-   RESET MODEL
-   ========================================================= */
-
 function resetModel() {
 
   modelSelect.innerHTML =
@@ -1197,10 +1028,6 @@ function resetModel() {
 
 }
 
-
-/* =========================================================
-   RESET EQUIPMENT CARD
-   ========================================================= */
 
 function resetEquipmentCard() {
 
@@ -1218,8 +1045,30 @@ function resetEquipmentCard() {
 }
 
 
+function clearMessage() {
+
+  message.textContent =
+    "";
+
+  message.style.display =
+    "none";
+
+}
+
+
+function showMessage(text) {
+
+  message.textContent =
+    text;
+
+  message.style.display =
+    "block";
+
+}
+
+
 /* =========================================================
-   ESCAPE HTML
+   SECURITY
    ========================================================= */
 
 function escapeHtml(value) {
@@ -1257,7 +1106,7 @@ function escapeHtml(value) {
 
 
 /* =========================================================
-   START APPLICATION
+   START
    ========================================================= */
 
 loadEquipmentData();

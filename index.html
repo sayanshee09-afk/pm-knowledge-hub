@@ -542,10 +542,12 @@ function loadData() {
     };
 
 
-  script.src =
-    API_URL +
-    '?action=data&callback=' +
-    callbackName;
+ script.src =
+  API_URL +
+  '?action=data&callback=' +
+  encodeURIComponent(callbackName) +
+  '&v=' +
+  Date.now();
 
 
   script.onerror =

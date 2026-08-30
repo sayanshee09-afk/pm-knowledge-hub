@@ -1,1 +1,1002 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<meta name="theme-color"
+      content="#172033">
+
+<title>P&M Knowledge Hub</title>
+
+
+<style>
+
+* {
+  box-sizing: border-box;
+}
+
+
+body {
+
+  margin: 0;
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  background: #eef2f6;
+
+  color: #172033;
+
+}
+
+
+/* HEADER */
+
+.header {
+
+  background: #172033;
+
+  color: white;
+
+  text-align: center;
+
+  padding: 25px 15px;
+
+}
+
+
+.logo {
+
+  font-size: 27px;
+
+  font-weight: 800;
+
+}
+
+
+.subtitle {
+
+  margin-top: 7px;
+
+  color: #cbd5e1;
+
+  font-size: 14px;
+
+}
+
+
+/* MAIN */
+
+.container {
+
+  width: 94%;
+
+  max-width: 650px;
+
+  margin: 25px auto;
+
+}
+
+
+.card {
+
+  background: white;
+
+  border-radius: 18px;
+
+  padding: 25px;
+
+  box-shadow:
+    0 6px 25px
+    rgba(0,0,0,0.08);
+
+}
+
+
+.title {
+
+  font-size: 23px;
+
+  font-weight: 800;
+
+  margin-bottom: 22px;
+
+}
+
+
+/* FORM */
+
+label {
+
+  display: block;
+
+  margin-top: 18px;
+
+  margin-bottom: 8px;
+
+  font-weight: 700;
+
+  font-size: 14px;
+
+}
+
+
+select {
+
+  width: 100%;
+
+  padding: 15px;
+
+  border-radius: 11px;
+
+  border: 1px solid #d5dbe3;
+
+  background: white;
+
+  font-size: 16px;
+
+  color: #172033;
+
+}
+
+
+select:disabled {
+
+  background: #f1f4f7;
+
+  color: #9aa3b2;
+
+}
+
+
+/* EQUIPMENT INFO */
+
+.info {
+
+  display: none;
+
+  margin-top: 22px;
+
+  padding: 18px;
+
+  background: #f4f6f9;
+
+  border-radius: 13px;
+
+}
+
+
+.info-name {
+
+  font-size: 21px;
+
+  font-weight: 800;
+
+}
+
+
+.info-model {
+
+  margin-top: 7px;
+
+  color: #64748b;
+
+}
+
+
+/* BUTTON */
+
+.start {
+
+  width: 100%;
+
+  margin-top: 25px;
+
+  padding: 17px;
+
+  border: none;
+
+  border-radius: 12px;
+
+  background: #172033;
+
+  color: white;
+
+  font-size: 16px;
+
+  font-weight: 800;
+
+  cursor: pointer;
+
+}
+
+
+.start:disabled {
+
+  background: #9aa1ab;
+
+}
+
+
+/* MESSAGE */
+
+.message {
+
+  display: none;
+
+  margin-top: 18px;
+
+  padding: 13px;
+
+  border-radius: 10px;
+
+  background: #fff4e5;
+
+  color: #8a5200;
+
+}
+
+
+/* LOADING */
+
+.loading {
+
+  text-align: center;
+
+  padding: 20px;
+
+  color: #64748b;
+
+}
+
+
+/* MOBILE */
+
+@media(max-width:600px) {
+
+  .logo {
+
+    font-size: 23px;
+
+  }
+
+  .card {
+
+    padding: 20px;
+
+  }
+
+  .container {
+
+    margin-top: 18px;
+
+  }
+
+  select {
+
+    padding: 16px;
+
+  }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header class="header">
+
+  <div class="logo">
+
+    ⚙ P&M KNOWLEDGE HUB
+
+  </div>
+
+  <div class="subtitle">
+
+    Equipment Knowledge Portal
+
+  </div>
+
+</header>
+
+
+<main class="container">
+
+<section class="card">
+
+
+<div class="title">
+
+  Select Equipment
+
+</div>
+
+
+<!-- EQUIPMENT -->
+
+<label>
+
+  Equipment
+
+</label>
+
+<select id="equipment">
+
+  <option value="">
+
+    Loading equipment...
+
+  </option>
+
+</select>
+
+
+<!-- MAKE -->
+
+<label>
+
+  Make / Manufacturer
+
+</label>
+
+<select id="make" disabled>
+
+  <option value="">
+
+    Select equipment first
+
+  </option>
+
+</select>
+
+
+<!-- MODEL -->
+
+<label>
+
+  Model
+
+</label>
+
+<select id="model" disabled>
+
+  <option value="">
+
+    Select make first
+
+  </option>
+
+</select>
+
+
+<!-- INFO -->
+
+<div
+  class="info"
+  id="info"
+>
+
+  <div
+    class="info-name"
+    id="infoName"
+  ></div>
+
+  <div
+    class="info-model"
+    id="infoModel"
+  ></div>
+
+</div>
+
+
+<!-- MESSAGE -->
+
+<div
+  class="message"
+  id="message"
+></div>
+
+
+<!-- BUTTON -->
+
+<button
+  class="start"
+  id="start"
+  disabled
+>
+
+  🚀 START ASSISTANCE
+
+</button>
+
+
+</section>
+
+</main>
+
+
+<footer
+  style="
+    text-align:center;
+    padding:20px;
+    color:#8a94a3;
+    font-size:11px;
+  "
+>
+
+  P&M Department • Knowledge Hub
+
+</footer>
+
+
+<script>
+
+
+/* ==================================================
+   YOUR APPS SCRIPT WEB APP URL
+================================================== */
+
+const API_URL =
+'https://script.google.com/macros/s/AKfycbxJIiu9XgpnoxL9TrbQyOLJufQUd1dDFJuJuN8QUrr12pjvj403sGUoi5Zhjv07qy2v/exec';
+
+
+/* ==================================================
+   DATA
+================================================== */
+
+let equipmentData = [];
+
+let selectedItem = null;
+
+
+/* ==================================================
+   ELEMENTS
+================================================== */
+
+const equipmentSelect =
+  document.getElementById('equipment');
+
+const makeSelect =
+  document.getElementById('make');
+
+const modelSelect =
+  document.getElementById('model');
+
+const startButton =
+  document.getElementById('start');
+
+const info =
+  document.getElementById('info');
+
+const infoName =
+  document.getElementById('infoName');
+
+const infoModel =
+  document.getElementById('infoModel');
+
+const message =
+  document.getElementById('message');
+
+
+/* ==================================================
+   LOAD DATA
+================================================== */
+
+function loadData() {
+
+  equipmentSelect.innerHTML =
+    '<option value="">Loading equipment...</option>';
+
+
+  const script =
+    document.createElement('script');
+
+
+  const callbackName =
+    'pmKnowledgeHub_' +
+    Date.now();
+
+
+  window[callbackName] =
+    function(data) {
+
+      try {
+
+        equipmentData =
+          Array.isArray(data)
+            ? data
+            : [];
+
+        buildEquipmentList();
+
+      }
+
+      catch(error) {
+
+        showMessage(
+          'Unable to read equipment data.'
+        );
+
+      }
+
+      finally {
+
+        delete window[callbackName];
+
+        script.remove();
+
+      }
+
+    };
+
+
+  script.src =
+    API_URL +
+    '?action=data&callback=' +
+    callbackName;
+
+
+  script.onerror =
+    function() {
+
+      showMessage(
+        'Unable to connect to P&M Knowledge Hub.'
+      );
+
+      delete window[callbackName];
+
+      script.remove();
+
+    };
+
+
+  document.body.appendChild(script);
+
+}
+
+
+/* ==================================================
+   BUILD EQUIPMENT LIST
+================================================== */
+
+function buildEquipmentList() {
+
+  equipmentSelect.innerHTML =
+    '<option value="">Select equipment</option>';
+
+
+  const types = [];
+
+
+  equipmentData.forEach(
+    function(item) {
+
+      if (
+        item.equipment &&
+        !types.includes(
+          item.equipment
+        )
+      ) {
+
+        types.push(
+          item.equipment
+        );
+
+      }
+
+    }
+  );
+
+
+  types.sort();
+
+
+  types.forEach(
+    function(type) {
+
+      const option =
+        document.createElement(
+          'option'
+        );
+
+      option.value =
+        type;
+
+      option.textContent =
+        type;
+
+      equipmentSelect.appendChild(
+        option
+      );
+
+    }
+  );
+
+}
+
+
+/* ==================================================
+   EQUIPMENT CHANGE
+================================================== */
+
+equipmentSelect.addEventListener(
+  'change',
+  function() {
+
+    const selected =
+      this.value;
+
+
+    resetMake();
+
+    resetModel();
+
+    resetInfo();
+
+
+    if (!selected) {
+
+      return;
+
+    }
+
+
+    const makes = [];
+
+
+    equipmentData.forEach(
+      function(item) {
+
+        if (
+
+          item.equipment ===
+          selected
+
+          &&
+
+          item.make
+
+          &&
+
+          !makes.includes(
+            item.make
+          )
+
+        ) {
+
+          makes.push(
+            item.make
+          );
+
+        }
+
+      }
+    );
+
+
+    makes.sort();
+
+
+    makeSelect.innerHTML =
+      '<option value="">Select make</option>';
+
+
+    makes.forEach(
+      function(make) {
+
+        const option =
+          document.createElement(
+            'option'
+          );
+
+        option.value =
+          make;
+
+        option.textContent =
+          make;
+
+        makeSelect.appendChild(
+          option
+        );
+
+      }
+    );
+
+
+    makeSelect.disabled =
+      false;
+
+  }
+);
+
+
+/* ==================================================
+   MAKE CHANGE
+================================================== */
+
+makeSelect.addEventListener(
+  'change',
+  function() {
+
+    const equipment =
+      equipmentSelect.value;
+
+    const make =
+      this.value;
+
+
+    resetModel();
+
+    resetInfo();
+
+
+    if (
+      !equipment ||
+      !make
+    ) {
+
+      return;
+
+    }
+
+
+    const models = [];
+
+
+    equipmentData.forEach(
+      function(item) {
+
+        if (
+
+          item.equipment ===
+          equipment
+
+          &&
+
+          item.make ===
+          make
+
+        ) {
+
+          models.push(item);
+
+        }
+
+      }
+    );
+
+
+    modelSelect.innerHTML =
+      '<option value="">Select model</option>';
+
+
+    models.forEach(
+      function(item) {
+
+        const option =
+          document.createElement(
+            'option'
+          );
+
+        option.value =
+          item.model;
+
+        option.textContent =
+          item.model;
+
+        modelSelect.appendChild(
+          option
+        );
+
+      }
+    );
+
+
+    modelSelect.disabled =
+      false;
+
+  }
+);
+
+
+/* ==================================================
+   MODEL CHANGE
+================================================== */
+
+modelSelect.addEventListener(
+  'change',
+  function() {
+
+    const equipment =
+      equipmentSelect.value;
+
+    const make =
+      makeSelect.value;
+
+    const model =
+      this.value;
+
+
+    selectedItem =
+      equipmentData.find(
+        function(item) {
+
+          return (
+
+            item.equipment ===
+            equipment
+
+            &&
+
+            item.make ===
+            make
+
+            &&
+
+            item.model ===
+            model
+
+          );
+
+        }
+      );
+
+
+    resetInfo();
+
+
+    if (!selectedItem) {
+
+      startButton.disabled =
+        true;
+
+      return;
+
+    }
+
+
+    infoName.textContent =
+      selectedItem.equipment;
+
+
+    infoModel.textContent =
+      selectedItem.make +
+      ' • ' +
+      selectedItem.model;
+
+
+    info.style.display =
+      'block';
+
+
+    startButton.disabled =
+      false;
+
+  }
+);
+
+
+/* ==================================================
+   START
+================================================== */
+
+startButton.addEventListener(
+  'click',
+  function() {
+
+    if (!selectedItem) {
+
+      return;
+
+    }
+
+
+    const link =
+      selectedItem.notebookLink;
+
+
+    if (
+      !link ||
+      link.toLowerCase()
+        .includes(
+          'paste notebook'
+        )
+    ) {
+
+      showMessage(
+        'Notebook link has not been added for this equipment.'
+      );
+
+      return;
+
+    }
+
+
+    startButton.disabled =
+      true;
+
+    startButton.textContent =
+      '⏳ OPENING...';
+
+
+    /*
+     * Open NotebookLM.
+     */
+
+    window.location.href =
+      link;
+
+  }
+);
+
+
+/* ==================================================
+   RESET FUNCTIONS
+================================================== */
+
+function resetMake() {
+
+  makeSelect.innerHTML =
+    '<option value="">Select equipment first</option>';
+
+  makeSelect.disabled =
+    true;
+
+}
+
+
+function resetModel() {
+
+  modelSelect.innerHTML =
+    '<option value="">Select make first</option>';
+
+  modelSelect.disabled =
+    true;
+
+}
+
+
+function resetInfo() {
+
+  info.style.display =
+    'none';
+
+  startButton.disabled =
+    true;
+
+  selectedItem =
+    null;
+
+}
+
+
+function showMessage(text) {
+
+  message.textContent =
+    text;
+
+  message.style.display =
+    'block';
+
+}
+
+
+loadData();
+
+</script>
+
+</body>
+
+</html>

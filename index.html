@@ -13,7 +13,6 @@
 
 <title>P&M Knowledge Hub</title>
 
-
 <style>
 
 * {
@@ -26,9 +25,6 @@ body {
   background: #eef2f6;
   color: #172033;
 }
-
-
-/* HEADER */
 
 .header {
   background: #172033;
@@ -48,17 +44,11 @@ body {
   font-size: 14px;
 }
 
-
-/* MAIN */
-
 .container {
   width: 94%;
   max-width: 680px;
   margin: 25px auto;
 }
-
-
-/* CARD */
 
 .card {
   background: white;
@@ -72,9 +62,6 @@ body {
   font-weight: 800;
   margin-bottom: 22px;
 }
-
-
-/* FORM */
 
 label {
   display: block;
@@ -99,9 +86,6 @@ select:disabled {
   color: #8b95a5;
 }
 
-
-/* EQUIPMENT INFO */
-
 .equipment-card {
   display: none;
   margin-top: 22px;
@@ -122,9 +106,6 @@ select:disabled {
   color: #64748b;
 }
 
-
-/* START BUTTON */
-
 .start-button {
   width: 100%;
   margin-top: 25px;
@@ -141,9 +122,6 @@ select:disabled {
 .start-button:disabled {
   background: #9aa1ab;
 }
-
-
-/* RESULT */
 
 .result {
   display: none;
@@ -175,9 +153,6 @@ select:disabled {
   color: #64748b;
 }
 
-
-/* NOTEBOOK BUTTON */
-
 .notebook-button {
   display: block;
   width: 100%;
@@ -189,9 +164,6 @@ select:disabled {
   font-size: 16px;
   font-weight: 800;
 }
-
-
-/* BACK BUTTON */
 
 .back-button {
   width: 100%;
@@ -205,9 +177,6 @@ select:disabled {
   cursor: pointer;
 }
 
-
-/* MESSAGE */
-
 .message {
   display: none;
   margin-top: 18px;
@@ -216,9 +185,6 @@ select:disabled {
   background: #fff4e5;
   color: #8a5200;
 }
-
-
-/* MOBILE */
 
 @media(max-width:600px) {
 
@@ -245,9 +211,7 @@ select:disabled {
 
 </head>
 
-
 <body>
-
 
 <header class="header">
 
@@ -261,16 +225,13 @@ select:disabled {
 
 </header>
 
-
 <main class="container">
-
 
 <section class="card" id="selectionCard">
 
   <div class="section-title">
     Select Equipment
   </div>
-
 
   <label>
     Equipment
@@ -284,7 +245,6 @@ select:disabled {
 
   </select>
 
-
   <label>
     Make / Manufacturer
   </label>
@@ -297,7 +257,6 @@ select:disabled {
 
   </select>
 
-
   <label>
     Model
   </label>
@@ -309,7 +268,6 @@ select:disabled {
     </option>
 
   </select>
-
 
   <div
     class="equipment-card"
@@ -328,12 +286,10 @@ select:disabled {
 
   </div>
 
-
   <div
     class="message"
     id="message"
   ></div>
-
 
   <button
     class="start-button"
@@ -346,7 +302,6 @@ select:disabled {
   </button>
 
 </section>
-
 
 <section
   class="card result"
@@ -389,9 +344,7 @@ select:disabled {
 
 </section>
 
-
 </main>
-
 
 <footer
   style="
@@ -406,7 +359,6 @@ select:disabled {
 
 </footer>
 
-
 <script>
 
 /* =========================================================
@@ -416,10 +368,6 @@ select:disabled {
 const API_URL =
   "https://script.google.com/macros/s/AKfycbxJIiu9XgpnoxL9TrbQyOLJufQUd1dDFJuJuN8QUrr12pjvj403sGUoi5Zhjv07qy2v/exec";
 
-
-/* =========================================================
-   VARIABLES
-   ========================================================= */
 
 let equipmentData = [];
 
@@ -493,7 +441,7 @@ function clearMessage() {
 
 
 /* =========================================================
-   LOAD DATA
+   LOAD EQUIPMENT DATA
    ========================================================= */
 
 function loadEquipmentData() {
@@ -507,12 +455,13 @@ function loadEquipmentData() {
 
 
   const callbackName =
-    "PMKnowledgeHub_" + Date.now();
+    "PMKnowledgeHubCallback_" + Date.now();
 
 
-  let finished = false;
+  let completed = false;
 
-  let script = null;
+  const script =
+    document.createElement("script");
 
 
   function cleanup() {
@@ -521,9 +470,7 @@ function loadEquipmentData() {
 
       delete window[callbackName];
 
-    }
-
-    catch (e) {}
+    } catch(e) {}
 
 
     if (
@@ -538,92 +485,84 @@ function loadEquipmentData() {
   }
 
 
+  /*
+   * Apps Script returns:
+   *
+   * PMKnowledgeHubCallback_xxxxx([...data...]);
+   */
+
   window[callbackName] =
     function(data) {
 
-      if (finished) return;
+      if (completed) return;
 
-      finished = true;
+      completed = true;
 
 
       console.log(
-        "P&M Knowledge Hub response:",
+        "P&M Knowledge Hub data:",
         data
       );
 
 
-      try {
-
-        if (
-          !Array.isArray(data)
-        ) {
-
-          throw new Error(
-            "Invalid data received from Apps Script."
-          );
-
-        }
-
-
-        equipmentData = data;
-
-
-        if (
-          equipmentData.length === 0
-        ) {
-
-          equipmentSelect.innerHTML =
-            '<option value="">No equipment found</option>';
-
-          showMessage(
-            "No equipment records were found in Equipment Master."
-          );
-
-          cleanup();
-
-          return;
-
-        }
-
-
-        populateEquipment();
-
-      }
-
-      catch(error) {
-
-        console.error(
-          "Data processing error:",
-          error
-        );
-
+      if (
+        !Array.isArray(data)
+      ) {
 
         equipmentSelect.innerHTML =
           '<option value="">Data error</option>';
 
-
         showMessage(
-          "Equipment data could not be processed."
+          "The Knowledge Hub returned invalid equipment data."
         );
+
+        cleanup();
+
+        return;
 
       }
 
+
+      equipmentData =
+        data;
+
+
+      if (
+        equipmentData.length === 0
+      ) {
+
+        equipmentSelect.innerHTML =
+          '<option value="">No equipment found</option>';
+
+        showMessage(
+          "No equipment records were found."
+        );
+
+        cleanup();
+
+        return;
+
+      }
+
+
+      populateEquipment();
 
       cleanup();
 
     };
 
 
-  script =
-    document.createElement("script");
-
+  /*
+   * IMPORTANT:
+   * This is JSONP.
+   */
 
   script.src =
     API_URL +
     "?action=data" +
     "&callback=" +
     encodeURIComponent(callbackName) +
-    "&_=" +
+    "&v=" +
     Date.now();
 
 
@@ -633,25 +572,20 @@ function loadEquipmentData() {
   script.onerror =
     function() {
 
-      if (finished) return;
+      if (completed) return;
 
-      finished = true;
-
-
-      console.error(
-        "Unable to connect to Apps Script."
-      );
+      completed = true;
 
 
       equipmentSelect.innerHTML =
         '<option value="">Connection failed</option>';
 
-
-      equipmentSelect.disabled = true;
+      equipmentSelect.disabled =
+        true;
 
 
       showMessage(
-        "Unable to connect to P&M Knowledge Hub. Check Apps Script deployment."
+        "Unable to connect to P&M Knowledge Hub."
       );
 
 
@@ -660,38 +594,39 @@ function loadEquipmentData() {
     };
 
 
-  document.body.appendChild(script);
+  document.head.appendChild(
+    script
+  );
 
+
+  /*
+   * Timeout protection
+   */
 
   setTimeout(
     function() {
 
-      if (finished) return;
+      if (completed) return;
 
-      finished = true;
-
-
-      console.error(
-        "Apps Script request timed out."
-      );
+      completed = true;
 
 
       equipmentSelect.innerHTML =
         '<option value="">Connection timeout</option>';
 
-
-      equipmentSelect.disabled = true;
+      equipmentSelect.disabled =
+        true;
 
 
       showMessage(
-        "P&M Knowledge Hub did not respond. Check Apps Script deployment."
+        "P&M Knowledge Hub took too long to respond."
       );
 
 
       cleanup();
 
     },
-    15000
+    20000
   );
 
 }
@@ -706,27 +641,31 @@ function populateEquipment() {
   equipmentSelect.innerHTML =
     '<option value="">Select equipment</option>';
 
-  equipmentSelect.disabled = false;
+  equipmentSelect.disabled =
+    false;
 
 
-  const types = [];
+  const equipmentList =
+    [];
 
 
   equipmentData.forEach(
     function(item) {
 
-      const type =
+      const name =
         String(
           item.equipment || ""
         ).trim();
 
 
       if (
-        type &&
-        !types.includes(type)
+        name &&
+        !equipmentList.includes(name)
       ) {
 
-        types.push(type);
+        equipmentList.push(
+          name
+        );
 
       }
 
@@ -734,11 +673,11 @@ function populateEquipment() {
   );
 
 
-  types.sort();
+  equipmentList.sort();
 
 
-  types.forEach(
-    function(type) {
+  equipmentList.forEach(
+    function(name) {
 
       const option =
         document.createElement(
@@ -746,9 +685,12 @@ function populateEquipment() {
         );
 
 
-      option.value = type;
+      option.value =
+        name;
 
-      option.textContent = type;
+
+      option.textContent =
+        name;
 
 
       equipmentSelect.appendChild(
@@ -769,7 +711,7 @@ equipmentSelect.addEventListener(
   "change",
   function() {
 
-    const selected =
+    const equipment =
       this.value;
 
 
@@ -782,45 +724,46 @@ equipmentSelect.addEventListener(
     clearMessage();
 
 
-    if (!selected) return;
+    if (!equipment) return;
 
 
-    const makes = [];
+    const makes =
+      [];
 
 
     equipmentData.forEach(
       function(item) {
 
-        const itemEquipment =
+        const sameEquipment =
           String(
             item.equipment || ""
           )
           .trim()
-          .toUpperCase();
+          .toUpperCase()
+          ===
+          equipment
+            .trim()
+            .toUpperCase();
 
 
-        const selectedEquipment =
-          String(selected)
-          .trim()
-          .toUpperCase();
+        if (sameEquipment) {
+
+          const make =
+            String(
+              item.make || ""
+            ).trim();
 
 
-        const make =
-          String(
-            item.make || ""
-          ).trim();
+          if (
+            make &&
+            !makes.includes(make)
+          ) {
 
+            makes.push(
+              make
+            );
 
-        if (
-          itemEquipment ===
-            selectedEquipment
-          &&
-          make
-          &&
-          !makes.includes(make)
-        ) {
-
-          makes.push(make);
+          }
 
         }
 
@@ -844,9 +787,12 @@ equipmentSelect.addEventListener(
           );
 
 
-        option.value = make;
+        option.value =
+          make;
 
-        option.textContent = make;
+
+        option.textContent =
+          make;
 
 
         makeSelect.appendChild(
@@ -857,22 +803,16 @@ equipmentSelect.addEventListener(
     );
 
 
+    makeSelect.disabled =
+      makes.length === 0;
+
+
     if (
-      makes.length > 0
+      makes.length === 0
     ) {
-
-      makeSelect.disabled =
-        false;
-
-    }
-
-    else {
 
       makeSelect.innerHTML =
         '<option value="">No make found</option>';
-
-      makeSelect.disabled =
-        true;
 
     }
 
@@ -891,7 +831,7 @@ makeSelect.addEventListener(
     const equipment =
       equipmentSelect.value;
 
-    const selectedMake =
+    const make =
       this.value;
 
 
@@ -904,49 +844,59 @@ makeSelect.addEventListener(
 
     if (
       !equipment ||
-      !selectedMake
-    ) {
-
-      return;
-
-    }
+      !make
+    ) return;
 
 
-    const models = [];
+    const models =
+      [];
 
 
     equipmentData.forEach(
       function(item) {
 
-        const itemEquipment =
+        const sameEquipment =
           String(
             item.equipment || ""
           )
           .trim()
-          .toUpperCase();
+          .toUpperCase()
+          ===
+          equipment
+            .trim()
+            .toUpperCase();
 
 
-        const itemMake =
+        const sameMake =
           String(
             item.make || ""
           )
           .trim()
-          .toUpperCase();
+          .toUpperCase()
+          ===
+          make
+            .trim()
+            .toUpperCase();
 
 
         if (
-          itemEquipment ===
-            String(equipment)
-              .trim()
-              .toUpperCase()
-          &&
-          itemMake ===
-            String(selectedMake)
-              .trim()
-              .toUpperCase()
+          sameEquipment &&
+          sameMake
         ) {
 
-          models.push(item);
+          const model =
+            String(
+              item.model || ""
+            ).trim();
+
+
+          if (model) {
+
+            models.push(
+              model
+            );
+
+          }
 
         }
 
@@ -959,7 +909,7 @@ makeSelect.addEventListener(
 
 
     models.forEach(
-      function(item) {
+      function(model) {
 
         const option =
           document.createElement(
@@ -968,11 +918,11 @@ makeSelect.addEventListener(
 
 
         option.value =
-          item.model;
+          model;
 
 
         option.textContent =
-          item.model;
+          model;
 
 
         modelSelect.appendChild(
@@ -983,22 +933,16 @@ makeSelect.addEventListener(
     );
 
 
+    modelSelect.disabled =
+      models.length === 0;
+
+
     if (
-      models.length > 0
+      models.length === 0
     ) {
-
-      modelSelect.disabled =
-        false;
-
-    }
-
-    else {
 
       modelSelect.innerHTML =
         '<option value="">No model found</option>';
-
-      modelSelect.disabled =
-        true;
 
     }
 
@@ -1024,9 +968,16 @@ modelSelect.addEventListener(
       this.value;
 
 
+    resetEquipmentCard();
+
     clearMessage();
 
-    resetEquipmentCard();
+
+    if (
+      !equipment ||
+      !make ||
+      !model
+    ) return;
 
 
     selectedEquipment =
@@ -1041,7 +992,7 @@ modelSelect.addEventListener(
             .trim()
             .toUpperCase()
             ===
-            String(equipment)
+            equipment
               .trim()
               .toUpperCase()
 
@@ -1053,7 +1004,7 @@ modelSelect.addEventListener(
             .trim()
             .toUpperCase()
             ===
-            String(make)
+            make
               .trim()
               .toUpperCase()
 
@@ -1065,7 +1016,7 @@ modelSelect.addEventListener(
             .trim()
             .toUpperCase()
             ===
-            String(model)
+            model
               .trim()
               .toUpperCase()
 
@@ -1078,9 +1029,6 @@ modelSelect.addEventListener(
     if (
       !selectedEquipment
     ) {
-
-      startButton.disabled =
-        true;
 
       return;
 
@@ -1118,11 +1066,7 @@ startButton.addEventListener(
 
     if (
       !selectedEquipment
-    ) {
-
-      return;
-
-    }
+    ) return;
 
 
     const notebookLink =
@@ -1139,20 +1083,12 @@ startButton.addEventListener(
     ) {
 
       showMessage(
-        "NotebookLM link has not been added for this equipment."
+        "NotebookLM link is not available for this equipment."
       );
 
       return;
 
     }
-
-
-    startButton.disabled =
-      true;
-
-
-    startButton.textContent =
-      "⏳ OPENING NOTEBOOK...";
 
 
     resultDescription.innerHTML =
@@ -1195,14 +1131,6 @@ startButton.addEventListener(
 
     resultCard.style.display =
       "block";
-
-
-    startButton.disabled =
-      false;
-
-
-    startButton.textContent =
-      "🚀 START ASSISTANCE";
 
   }
 );
@@ -1335,7 +1263,6 @@ function escapeHtml(value) {
 loadEquipmentData();
 
 </script>
-
 
 </body>
 

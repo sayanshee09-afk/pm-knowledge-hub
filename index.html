@@ -20,240 +20,209 @@
   box-sizing: border-box;
 }
 
-
 body {
-
   margin: 0;
-
-  font-family:
-    Arial,
-    Helvetica,
-    sans-serif;
-
+  font-family: Arial, Helvetica, sans-serif;
   background: #eef2f6;
-
   color: #172033;
-
 }
-
 
 /* HEADER */
 
 .header {
-
   background: #172033;
-
   color: white;
-
   text-align: center;
-
-  padding: 25px 15px;
-
+  padding: 27px 15px;
 }
-
 
 .logo {
-
   font-size: 27px;
-
   font-weight: 800;
-
 }
 
-
 .subtitle {
-
   margin-top: 7px;
-
   color: #cbd5e1;
-
   font-size: 14px;
-
 }
 
 
 /* MAIN */
 
 .container {
-
   width: 94%;
-
-  max-width: 650px;
-
+  max-width: 680px;
   margin: 25px auto;
-
 }
 
+
+/* CARD */
 
 .card {
-
   background: white;
-
   border-radius: 18px;
-
   padding: 25px;
-
-  box-shadow:
-    0 6px 25px
-    rgba(0,0,0,0.08);
-
+  box-shadow: 0 6px 25px rgba(0,0,0,0.08);
 }
 
-
-.title {
-
-  font-size: 23px;
-
+.section-title {
+  font-size: 22px;
   font-weight: 800;
-
   margin-bottom: 22px;
-
 }
 
 
 /* FORM */
 
 label {
-
   display: block;
-
   margin-top: 18px;
-
   margin-bottom: 8px;
-
-  font-weight: 700;
-
   font-size: 14px;
-
+  font-weight: 700;
 }
-
 
 select {
-
   width: 100%;
-
   padding: 15px;
-
-  border-radius: 11px;
-
   border: 1px solid #d5dbe3;
-
+  border-radius: 11px;
   background: white;
-
   font-size: 16px;
-
   color: #172033;
-
 }
 
-
 select:disabled {
-
   background: #f1f4f7;
-
-  color: #9aa3b2;
-
+  color: #8b95a5;
 }
 
 
 /* EQUIPMENT INFO */
 
-.info {
-
+.equipment-card {
   display: none;
-
   margin-top: 22px;
-
   padding: 18px;
-
-  background: #f4f6f9;
-
   border-radius: 13px;
-
+  background: #f4f6f9;
+  border: 1px solid #e4e8ee;
 }
 
-
-.info-name {
-
+.equipment-name {
   font-size: 21px;
-
   font-weight: 800;
-
 }
 
-
-.info-model {
-
+.equipment-model {
   margin-top: 7px;
-
+  font-size: 15px;
   color: #64748b;
-
 }
 
 
-/* BUTTON */
+/* START BUTTON */
 
-.start {
-
+.start-button {
   width: 100%;
-
   margin-top: 25px;
-
-  padding: 17px;
-
+  padding: 16px;
   border: none;
-
   border-radius: 12px;
-
   background: #172033;
-
   color: white;
-
   font-size: 16px;
-
   font-weight: 800;
-
   cursor: pointer;
+}
 
+.start-button:disabled {
+  background: #9aa1ab;
 }
 
 
-.start:disabled {
+/* RESULT */
 
-  background: #9aa1ab;
+.result {
+  display: none;
+  text-align: center;
+}
 
+.success-icon {
+  width: 55px;
+  height: 55px;
+  margin: 0 auto 15px;
+  border-radius: 50%;
+  background: #e8f5ec;
+  color: #16803a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: 800;
+}
+
+.result-title {
+  font-size: 23px;
+  font-weight: 800;
+}
+
+.result-description {
+  margin: 15px 0 22px;
+  line-height: 1.7;
+  color: #64748b;
+}
+
+
+/* NOTEBOOK BUTTON */
+
+.notebook-button {
+  display: block;
+  width: 100%;
+  padding: 16px;
+  border-radius: 12px;
+  background: #172033;
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 800;
+}
+
+
+/* BACK BUTTON */
+
+.back-button {
+  width: 100%;
+  margin-top: 12px;
+  padding: 13px;
+  border: 1px solid #d5dbe3;
+  border-radius: 11px;
+  background: white;
+  color: #172033;
+  font-weight: 700;
+  cursor: pointer;
 }
 
 
 /* MESSAGE */
 
 .message {
-
   display: none;
-
   margin-top: 18px;
-
   padding: 13px;
-
   border-radius: 10px;
-
   background: #fff4e5;
-
   color: #8a5200;
-
 }
 
 
 /* LOADING */
 
 .loading {
-
   text-align: center;
-
   padding: 20px;
-
   color: #64748b;
-
 }
 
 
@@ -262,27 +231,20 @@ select:disabled {
 @media(max-width:600px) {
 
   .logo {
-
     font-size: 23px;
-
-  }
-
-  .card {
-
-    padding: 20px;
-
   }
 
   .container {
+    width: 94%;
+  }
 
-    margin-top: 18px;
-
+  .card {
+    padding: 20px;
   }
 
   select {
-
     padding: 16px;
-
+    font-size: 16px;
   }
 
 }
@@ -295,18 +257,16 @@ select:disabled {
 <body>
 
 
+<!-- HEADER -->
+
 <header class="header">
 
   <div class="logo">
-
     ⚙ P&M KNOWLEDGE HUB
-
   </div>
 
   <div class="subtitle">
-
     Equipment Knowledge Portal
-
   </div>
 
 </header>
@@ -314,115 +274,156 @@ select:disabled {
 
 <main class="container">
 
-<section class="card">
 
+<!-- SELECTION CARD -->
 
-<div class="title">
-
-  Select Equipment
-
-</div>
-
-
-<!-- EQUIPMENT -->
-
-<label>
-
-  Equipment
-
-</label>
-
-<select id="equipment">
-
-  <option value="">
-
-    Loading equipment...
-
-  </option>
-
-</select>
-
-
-<!-- MAKE -->
-
-<label>
-
-  Make / Manufacturer
-
-</label>
-
-<select id="make" disabled>
-
-  <option value="">
-
-    Select equipment first
-
-  </option>
-
-</select>
-
-
-<!-- MODEL -->
-
-<label>
-
-  Model
-
-</label>
-
-<select id="model" disabled>
-
-  <option value="">
-
-    Select make first
-
-  </option>
-
-</select>
-
-
-<!-- INFO -->
-
-<div
-  class="info"
-  id="info"
+<section
+  class="card"
+  id="selectionCard"
 >
 
-  <div
-    class="info-name"
-    id="infoName"
-  ></div>
+  <div class="section-title">
+    Select Equipment
+  </div>
+
+
+  <!-- EQUIPMENT -->
+
+  <label>
+    Equipment
+  </label>
+
+  <select id="equipment">
+
+    <option value="">
+      Loading equipment...
+    </option>
+
+  </select>
+
+
+  <!-- MAKE -->
+
+  <label>
+    Make / Manufacturer
+  </label>
+
+  <select
+    id="make"
+    disabled
+  >
+
+    <option value="">
+      Select equipment first
+    </option>
+
+  </select>
+
+
+  <!-- MODEL -->
+
+  <label>
+    Model
+  </label>
+
+  <select
+    id="model"
+    disabled
+  >
+
+    <option value="">
+      Select make first
+    </option>
+
+  </select>
+
+
+  <!-- EQUIPMENT INFORMATION -->
 
   <div
-    class="info-model"
-    id="infoModel"
+    class="equipment-card"
+    id="equipmentCard"
+  >
+
+    <div
+      class="equipment-name"
+      id="equipmentName"
+    ></div>
+
+    <div
+      class="equipment-model"
+      id="equipmentModel"
+    ></div>
+
+  </div>
+
+
+  <!-- MESSAGE -->
+
+  <div
+    class="message"
+    id="message"
   ></div>
 
-</div>
 
+  <!-- START -->
 
-<!-- MESSAGE -->
+  <button
+    class="start-button"
+    id="startButton"
+    disabled
+  >
 
-<div
-  class="message"
-  id="message"
-></div>
+    🚀 START ASSISTANCE
 
-
-<!-- BUTTON -->
-
-<button
-  class="start"
-  id="start"
-  disabled
->
-
-  🚀 START ASSISTANCE
-
-</button>
-
+  </button>
 
 </section>
+
+
+<!-- RESULT CARD -->
+
+<section
+  class="card result"
+  id="resultCard"
+>
+
+  <div class="success-icon">
+    ✓
+  </div>
+
+  <div class="result-title">
+    Equipment Selected
+  </div>
+
+  <div
+    class="result-description"
+    id="resultDescription"
+  ></div>
+
+  <a
+    id="notebookButton"
+    class="notebook-button"
+    href="#"
+    target="_blank"
+    rel="noopener"
+  >
+
+    🔗 OPEN NOTEBOOK
+
+  </a>
+
+  <button
+    class="back-button"
+    id="backButton"
+  >
+
+    ← SELECT ANOTHER EQUIPMENT
+
+  </button>
+
+</section>
+
 
 </main>
 
@@ -441,11 +442,11 @@ select:disabled {
 </footer>
 
 
+
 <script>
 
-
 /* ==================================================
-   YOUR APPS SCRIPT WEB APP URL
+   APPS SCRIPT API URL
 ================================================== */
 
 const API_URL =
@@ -458,7 +459,7 @@ const API_URL =
 
 let equipmentData = [];
 
-let selectedItem = null;
+let selectedEquipment = null;
 
 
 /* ==================================================
@@ -474,43 +475,96 @@ const makeSelect =
 const modelSelect =
   document.getElementById('model');
 
+const equipmentCard =
+  document.getElementById('equipmentCard');
+
+const equipmentName =
+  document.getElementById('equipmentName');
+
+const equipmentModel =
+  document.getElementById('equipmentModel');
+
 const startButton =
-  document.getElementById('start');
-
-const info =
-  document.getElementById('info');
-
-const infoName =
-  document.getElementById('infoName');
-
-const infoModel =
-  document.getElementById('infoModel');
+  document.getElementById('startButton');
 
 const message =
   document.getElementById('message');
 
+const selectionCard =
+  document.getElementById('selectionCard');
+
+const resultCard =
+  document.getElementById('resultCard');
+
+const resultDescription =
+  document.getElementById('resultDescription');
+
+const notebookButton =
+  document.getElementById('notebookButton');
+
+const backButton =
+  document.getElementById('backButton');
+
 
 /* ==================================================
-   LOAD DATA
+   SHOW MESSAGE
 ================================================== */
 
-function loadData() {
+function showMessage(text) {
+
+  message.textContent = text;
+
+  message.style.display = 'block';
+
+}
+
+
+/* ==================================================
+   CLEAR MESSAGE
+================================================== */
+
+function clearMessage() {
+
+  message.textContent = '';
+
+  message.style.display = 'none';
+
+}
+
+
+/* ==================================================
+   LOAD DATA FROM APPS SCRIPT
+================================================== */
+
+function loadEquipmentData() {
 
   equipmentSelect.innerHTML =
     '<option value="">Loading equipment...</option>';
 
+  clearMessage();
 
-  const script =
-    document.createElement('script');
 
+  /*
+   * Create unique callback name.
+   */
 
   const callbackName =
-    'pmKnowledgeHub_' +
+    'PMKnowledgeHub_' +
     Date.now();
 
 
+  /*
+   * Create callback function.
+   */
+
   window[callbackName] =
     function(data) {
+
+      console.log(
+        'P&M equipment data:',
+        data
+      );
+
 
       try {
 
@@ -519,47 +573,90 @@ function loadData() {
             ? data
             : [];
 
-        buildEquipmentList();
+
+        if (
+          equipmentData.length === 0
+        ) {
+
+          equipmentSelect.innerHTML =
+            '<option value="">No equipment found</option>';
+
+          showMessage(
+            'No equipment records were found in Equipment Master.'
+          );
+
+          return;
+
+        }
+
+
+        populateEquipment();
 
       }
 
       catch(error) {
 
+        console.error(error);
+
         showMessage(
-          'Unable to read equipment data.'
+          'Unable to process equipment data.'
         );
 
       }
 
-      finally {
 
+      /*
+       * Remove callback after use.
+       */
+
+      try {
         delete window[callbackName];
-
-        script.remove();
-
       }
+      catch(error) {}
 
     };
 
 
- script.src =
-  API_URL +
-  '?action=data&callback=' +
-  encodeURIComponent(callbackName) +
-  '&v=' +
-  Date.now();
+  /*
+   * Create script tag.
+   *
+   * This avoids google.script.run
+   * and works from GitHub Pages.
+   */
+
+  const script =
+    document.createElement('script');
+
+
+  script.src =
+    API_URL +
+    '?action=data&callback=' +
+    encodeURIComponent(callbackName) +
+    '&v=' +
+    Date.now();
 
 
   script.onerror =
     function() {
 
+      console.error(
+        'Apps Script API request failed.'
+      );
+
+
       showMessage(
         'Unable to connect to P&M Knowledge Hub.'
       );
 
-      delete window[callbackName];
 
-      script.remove();
+      equipmentSelect.innerHTML =
+        '<option value="">Connection failed</option>';
+
+
+      try {
+        delete window[callbackName];
+      }
+      catch(error) {}
 
     };
 
@@ -570,10 +667,10 @@ function loadData() {
 
 
 /* ==================================================
-   BUILD EQUIPMENT LIST
+   POPULATE EQUIPMENT TYPES
 ================================================== */
 
-function buildEquipmentList() {
+function populateEquipment() {
 
   equipmentSelect.innerHTML =
     '<option value="">Select equipment</option>';
@@ -585,16 +682,18 @@ function buildEquipmentList() {
   equipmentData.forEach(
     function(item) {
 
+      const type =
+        String(
+          item.equipment || ''
+        ).trim();
+
+
       if (
-        item.equipment &&
-        !types.includes(
-          item.equipment
-        )
+        type &&
+        !types.includes(type)
       ) {
 
-        types.push(
-          item.equipment
-        );
+        types.push(type);
 
       }
 
@@ -609,15 +708,16 @@ function buildEquipmentList() {
     function(type) {
 
       const option =
-        document.createElement(
-          'option'
-        );
+        document.createElement('option');
+
 
       option.value =
         type;
 
+
       option.textContent =
         type;
+
 
       equipmentSelect.appendChild(
         option
@@ -645,7 +745,9 @@ equipmentSelect.addEventListener(
 
     resetModel();
 
-    resetInfo();
+    resetEquipmentCard();
+
+    clearMessage();
 
 
     if (!selected) {
@@ -662,9 +764,11 @@ equipmentSelect.addEventListener(
       function(item) {
 
         if (
-
-          item.equipment ===
-          selected
+          String(item.equipment || '').trim()
+            .toUpperCase()
+          ===
+          String(selected).trim()
+            .toUpperCase()
 
           &&
 
@@ -675,7 +779,6 @@ equipmentSelect.addEventListener(
           !makes.includes(
             item.make
           )
-
         ) {
 
           makes.push(
@@ -703,11 +806,14 @@ equipmentSelect.addEventListener(
             'option'
           );
 
+
         option.value =
           make;
 
+
         option.textContent =
           make;
+
 
         makeSelect.appendChild(
           option
@@ -735,18 +841,20 @@ makeSelect.addEventListener(
     const equipment =
       equipmentSelect.value;
 
-    const make =
+    const selectedMake =
       this.value;
 
 
     resetModel();
 
-    resetInfo();
+    resetEquipmentCard();
+
+    clearMessage();
 
 
     if (
       !equipment ||
-      !make
+      !selectedMake
     ) {
 
       return;
@@ -762,13 +870,23 @@ makeSelect.addEventListener(
 
         if (
 
-          item.equipment ===
-          equipment
+          String(item.equipment || '')
+            .trim()
+            .toUpperCase()
+          ===
+          String(equipment)
+            .trim()
+            .toUpperCase()
 
           &&
 
-          item.make ===
-          make
+          String(item.make || '')
+            .trim()
+            .toUpperCase()
+          ===
+          String(selectedMake)
+            .trim()
+            .toUpperCase()
 
         ) {
 
@@ -792,11 +910,14 @@ makeSelect.addEventListener(
             'option'
           );
 
+
         option.value =
           item.model;
 
+
         option.textContent =
           item.model;
+
 
         modelSelect.appendChild(
           option
@@ -831,24 +952,44 @@ modelSelect.addEventListener(
       this.value;
 
 
-    selectedItem =
+    clearMessage();
+
+    resetEquipmentCard();
+
+
+    selectedEquipment =
       equipmentData.find(
         function(item) {
 
           return (
 
-            item.equipment ===
-            equipment
+            String(item.equipment || '')
+              .trim()
+              .toUpperCase()
+            ===
+            String(equipment)
+              .trim()
+              .toUpperCase()
 
             &&
 
-            item.make ===
-            make
+            String(item.make || '')
+              .trim()
+              .toUpperCase()
+            ===
+            String(make)
+              .trim()
+              .toUpperCase()
 
             &&
 
-            item.model ===
-            model
+            String(item.model || '')
+              .trim()
+              .toUpperCase()
+            ===
+            String(model)
+              .trim()
+              .toUpperCase()
 
           );
 
@@ -856,10 +997,7 @@ modelSelect.addEventListener(
       );
 
 
-    resetInfo();
-
-
-    if (!selectedItem) {
+    if (!selectedEquipment) {
 
       startButton.disabled =
         true;
@@ -869,17 +1007,17 @@ modelSelect.addEventListener(
     }
 
 
-    infoName.textContent =
-      selectedItem.equipment;
+    equipmentName.textContent =
+      selectedEquipment.equipment;
 
 
-    infoModel.textContent =
-      selectedItem.make +
+    equipmentModel.textContent =
+      selectedEquipment.make +
       ' • ' +
-      selectedItem.model;
+      selectedEquipment.model;
 
 
-    info.style.display =
+    equipmentCard.style.display =
       'block';
 
 
@@ -891,34 +1029,39 @@ modelSelect.addEventListener(
 
 
 /* ==================================================
-   START
+   START ASSISTANCE
 ================================================== */
 
 startButton.addEventListener(
   'click',
   function() {
 
-    if (!selectedItem) {
+    if (!selectedEquipment) {
 
       return;
 
     }
 
 
-    const link =
-      selectedItem.notebookLink;
+    const notebookLink =
+      String(
+        selectedEquipment.notebookLink || ''
+      ).trim();
 
+
+    /*
+     * Check NotebookLM link.
+     */
 
     if (
-      !link ||
-      link.toLowerCase()
-        .includes(
-          'paste notebook'
-        )
+      !notebookLink ||
+      notebookLink
+        .toLowerCase()
+        .includes('paste notebook')
     ) {
 
       showMessage(
-        'Notebook link has not been added for this equipment.'
+        'NotebookLM link has not been added for this equipment.'
       );
 
       return;
@@ -929,23 +1072,102 @@ startButton.addEventListener(
     startButton.disabled =
       true;
 
+
     startButton.textContent =
-      '⏳ OPENING...';
+      '⏳ OPENING NOTEBOOK...';
 
 
     /*
-     * Open NotebookLM.
+     * Prepare result page.
      */
 
-    window.location.href =
-      link;
+    resultDescription.innerHTML =
+      '<strong>' +
+      escapeHtml(
+        selectedEquipment.equipment
+      ) +
+      '</strong><br>' +
+
+      escapeHtml(
+        selectedEquipment.make
+      ) +
+
+      ' • ' +
+
+      escapeHtml(
+        selectedEquipment.model
+      ) +
+
+      '<br><br>' +
+
+      'Knowledge Notebook: ' +
+
+      escapeHtml(
+        selectedEquipment.notebookName
+      );
+
+
+    notebookButton.href =
+      notebookLink;
+
+
+    /*
+     * Show result page.
+     */
+
+    selectionCard.style.display =
+      'none';
+
+    resultCard.style.display =
+      'block';
+
+
+    /*
+     * Reset button.
+     */
+
+    startButton.disabled =
+      false;
+
+    startButton.textContent =
+      '🚀 START ASSISTANCE';
 
   }
 );
 
 
 /* ==================================================
-   RESET FUNCTIONS
+   BACK BUTTON
+================================================== */
+
+backButton.addEventListener(
+  'click',
+  function() {
+
+    resultCard.style.display =
+      'none';
+
+    selectionCard.style.display =
+      'block';
+
+
+    equipmentSelect.value =
+      '';
+
+    resetMake();
+
+    resetModel();
+
+    resetEquipmentCard();
+
+    clearMessage();
+
+  }
+);
+
+
+/* ==================================================
+   RESET MAKE
 ================================================== */
 
 function resetMake() {
@@ -959,6 +1181,10 @@ function resetMake() {
 }
 
 
+/* ==================================================
+   RESET MODEL
+================================================== */
+
 function resetModel() {
 
   modelSelect.innerHTML =
@@ -970,34 +1196,68 @@ function resetModel() {
 }
 
 
-function resetInfo() {
+/* ==================================================
+   RESET EQUIPMENT CARD
+================================================== */
 
-  info.style.display =
+function resetEquipmentCard() {
+
+  equipmentCard.style.display =
     'none';
 
   startButton.disabled =
     true;
 
-  selectedItem =
+  selectedEquipment =
     null;
 
 }
 
 
-function showMessage(text) {
+/* ==================================================
+   ESCAPE HTML
+================================================== */
 
-  message.textContent =
-    text;
+function escapeHtml(value) {
 
-  message.style.display =
-    'block';
+  return String(value || '')
+
+    .replace(
+      /&/g,
+      '&amp;'
+    )
+
+    .replace(
+      /</g,
+      '&lt;'
+    )
+
+    .replace(
+      />/g,
+      '&gt;'
+    )
+
+    .replace(
+      /"/g,
+      '&quot;'
+    )
+
+    .replace(
+      /'/g,
+      '&#039;'
+    );
 
 }
 
 
-loadData();
+/* ==================================================
+   START
+================================================== */
+
+loadEquipmentData();
 
 </script>
+
 
 </body>
 

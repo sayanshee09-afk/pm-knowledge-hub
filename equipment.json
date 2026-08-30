@@ -1,0 +1,26 @@
+[
+  {
+    "equipment": "Material Hoist",
+    "make": "SPARTAN",
+    "model": "SCT-200",
+    "capacity": "2 Ton",
+    "notebookName": "SPARTAN SCT-200",
+    "notebookLink": "https://notebook.google.com/notebook/85db30be-ccd7-43dc-9849-6caa7709ddb5"
+  },
+  {
+    "equipment": "Tower Crane",
+    "make": "POTAIN",
+    "model": "MC115B",
+    "capacity": "1.6T 55M JIB",
+    "notebookName": "POTAIN MC115B",
+    "notebookLink": "Paste NotebookLM link"
+  },
+  {
+    "equipment": "Skid Steer Loader",
+    "make": "TEREX",
+    "model": "HEMAN 175",
+    "capacity": "0.46 CUM",
+    "notebookName": "TEREX HEMAN 175",
+    "notebookLink": "Paste NotebookLM link"
+  }
+]
